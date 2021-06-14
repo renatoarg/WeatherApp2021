@@ -7,7 +7,18 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="br.com.renatoarg.weatherapp2021.HomeFragment"
+        android:name="br.com.renatoarg.weatherapp2021.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/citiesFragment"
+        android:name="br.com.renatoarg.weatherapp2021.cities.CitiesFragment"
+        android:label="fragment_cities"
+        tools:layout="@layout/fragment_cities" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="br.com.renatoarg.weatherapp2021.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+
 </navigation>

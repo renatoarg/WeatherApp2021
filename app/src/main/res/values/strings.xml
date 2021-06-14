@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">WeatherApp2021</string>
     <string name="home_fragment_text">Home fragment</string>
+    <string name="error">Error</string>
+    <string name="unexpectedError">Unexpected error</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Home</string>
+    <string name="cities">Cities</string>
+    <string name="settings">Settings</string>
 </resources>

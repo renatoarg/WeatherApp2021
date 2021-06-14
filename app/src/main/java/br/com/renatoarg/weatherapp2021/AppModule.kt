@@ -1,18 +1,14 @@
 package br.com.renatoarg.weatherapp2021
 
-import br.com.renatoarg.weatherapp2021.data.HomeRepository
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import br.com.renatoarg.data.home.HomeClient
+import br.com.renatoarg.data.home.HomeRepository
+import br.com.renatoarg.weatherapp2021.home.HomeViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
 @ExperimentalUnsignedTypes
-object AppModule {
-
-    @Singleton
-    @Provides
-    fun provideRepository(): HomeRepository = HomeRepository()
+val homeModule = module(override = true) {
+    single { HomeClient() }
+    single { HomeRepository(get()) }
+    viewModel { HomeViewModel(get()) }
 }
