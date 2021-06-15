@@ -3,9 +3,57 @@
     <string name="home_fragment_text">Home fragment</string>
     <string name="error">Error</string>
     <string name="unexpectedError">Unexpected error</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Themes -->
+    <string name="theme_name_droid">Droid</string>
+    <string name="theme_desc_droid">Android Default</string>
+    <string name="theme_name_tokyo">Tokyo</string>
+    <string name="theme_desc_tokyo">Light</string>
+    <string name="theme_name_illini">Illini</string>
+    <string name="theme_desc_illini">Dark</string>
+    <string name="theme_name_sea_foam">Sea Foam</string>
+    <string name="theme_desc_sea_foam">Light, dark action bar</string>
+
+    <!-- General -->
+    <string name="dummy_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed venenatis placerat magna eu semper. Donec sagittis <a href="https://developer.android.com/guide/topics/ui/themes.html">pharetra</a> rhoncus.</string>
+    <string name="copied_to_clipboard">Copied to clipboard!</string>
+    <string name="none">None</string>
+    <string name="description">Description</string>
+    <string name="name">Name</string>
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+
+    <!-- General Errors -->
+    <string name="networking_error">Networking error has occurred.</string>
+
+    <!-- Landing Page -->
     <string name="home">Home</string>
     <string name="cities">Cities</string>
     <string name="settings">Settings</string>
+
+    <!-- Settings -->
+    <string name="temperature_in_metric">Temperature in Metric</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="speed_in_metric">Speed in Metric</string>
+    <string name="widgets">Widgets</string>
+    <string name="theming">Theming</string>
+    <string name="pages">Pages</string>
+    <string name="sample_pages">Sample Pages</string>
+
+    <!-- Cities -->
+    <string name="add_city">Add City</string>
+
+    <!-- Weather Page -->
+    <string name="pressure">Pressure</string>
+    <string name="humidity">Humidity</string>
+    <string name="wind_speed">Wind Speed</string>
+
+    <!-- Add City Page -->
+    <string name="search_for_city">Search for City…</string>
+    <string name="city_already_exists" formatted="true">City already amongst favorites: %s</string>
+    <string name="city_added_to_favorites" formatted="true">City added to favorites: %s</string>
 </resources>

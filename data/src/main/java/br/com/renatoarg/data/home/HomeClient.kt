@@ -10,14 +10,12 @@ import java.util.concurrent.TimeUnit
 
 class HomeClient : BaseApiClient() {
 
-    private val baseUrl = "https://api.tomorrow.io/"
+    private val baseUrl = "https://www.metaweather.com/"
 
     var baseClientHttp: OkHttpClient.Builder = OkHttpClient.Builder()
         .readTimeout(1, TimeUnit.MINUTES)
         .connectTimeout(10, TimeUnit.SECONDS)
         .writeTimeout(1, TimeUnit.MINUTES)
-
-
 
     val api: HomeApi
         get() {

@@ -4,41 +4,149 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.HomeFragment">
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingTop="@dimen/m_vertical_spacing">
 
-    <TextView
-        android:id="@+id/textView"
+    <br.com.renatoarg.weatherapp2021.home.NestedScrollableHost
+        android:id="@+id/cities_view_pager_outer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m_horizontal_spacing"
+        android:layout_marginEnd="@dimen/m_horizontal_spacing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/cities_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="50dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="52sp"
+            tools:text="San Francisco" />
+    </br.com.renatoarg.weatherapp2021.home.NestedScrollableHost>
+
+    <!-- Temperature -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/temperature_text_view"
+        style="@style/TextAppearance.MaterialComponents.Headline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/xl_horizontal_spacing"
+        android:layout_marginTop="@dimen/m_vertical_spacing"
+        app:layout_constraintBottom_toBottomOf="@id/weather_image_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/weather_image_view" />
+
+    <ImageView
+        android:id="@+id/weather_image_view"
+        android:layout_width="@dimen/weather_image_view_width"
+        android:layout_height="@dimen/weather_image_view_height"
+        android:layout_marginTop="@dimen/m_vertical_spacing"
+        android:layout_marginEnd="@dimen/m_horizontal_spacing"
+        android:src="@mipmap/clouds"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cities_view_pager_outer_layout" />
+
+    <!-- Pressure Label -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/pressure_label_text_view"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m_horizontal_spacing"
+        android:layout_marginTop="@dimen/m_vertical_spacing"
+        android:text="@string/pressure"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/weather_image_view" />
+
+    <!-- Humidity Label -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/humidity_label_text_view"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/humidity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/pressure_label_text_view" />
+
+    <!-- Wind Speed Label -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/wind_speed_label_text_view"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/m_horizontal_spacing"
+        android:text="@string/wind_speed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/pressure_label_text_view" />
+
+    <!-- Pressure -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/pressure_text_view"
+        style="@style/TextAppearance.MaterialComponents.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/m_vertical_spacing"
+        app:layout_constraintEnd_toEndOf="@id/pressure_label_text_view"
+        app:layout_constraintStart_toStartOf="@id/pressure_label_text_view"
+        app:layout_constraintTop_toBottomOf="@id/pressure_label_text_view"
+        tools:text="1,1090 hPa" />
+
+    <!-- Humidity -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/humidity_text_view"
+        style="@style/TextAppearance.MaterialComponents.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/m_vertical_spacing"
+        app:layout_constraintEnd_toEndOf="@id/humidity_label_text_view"
+        app:layout_constraintStart_toStartOf="@id/humidity_label_text_view"
+        app:layout_constraintTop_toBottomOf="@id/humidity_label_text_view"
+        tools:text="26%" />
+
+    <!-- Pressure -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/wind_speed_text_view"
+        style="@style/TextAppearance.MaterialComponents.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/m_vertical_spacing"
+        app:layout_constraintEnd_toEndOf="@id/wind_speed_label_text_view"
+        app:layout_constraintStart_toStartOf="@id/wind_speed_label_text_view"
+        app:layout_constraintTop_toBottomOf="@id/wind_speed_label_text_view"
+        tools:text="1.5 m/s" />
+
+
+    <!-- DateTime -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/date_time_text_view"
+        style="@style/TextAppearance.MaterialComponents.Headline4"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m_horizontal_spacing"
+        android:layout_marginEnd="@dimen/m_horizontal_spacing"
+        android:layout_marginBottom="@dimen/m_vertical_spacing"
         android:gravity="center"
-        android:text="@string/home_fragment_text"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toTopOf="@id/progressBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="July 21, 2020" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_progress_bar_height"
+        android:indeterminate="true"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/loading"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:showIn="@layout/fragment_home">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha=".3"
-            android:background="@color/black" />
-
-        <ProgressBar
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+        tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

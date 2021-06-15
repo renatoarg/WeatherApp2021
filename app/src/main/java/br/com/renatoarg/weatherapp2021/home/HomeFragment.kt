@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import br.com.renatoarg.data.entity.WeatherForLocation
 import br.com.renatoarg.weatherapp2021.ErrorState
-import br.com.renatoarg.weatherapp2021.LoadingState
+import br.com.renatoarg.weatherapp2021.R
 import br.com.renatoarg.weatherapp2021.base.BaseFragment
 import br.com.renatoarg.weatherapp2021.databinding.FragmentHomeBinding
+import coil.load
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -35,17 +36,14 @@ class HomeFragment : BaseFragment() {
         observeHomeState()
         observeErrorState()
         observeLoadingState()
-        viewModel.fetchTimelines("-73.98529171943665,40.75872069597532")
-        binding.textView.setOnClickListener {
-            changeTheme()
-        }
+        viewModel.fetchWeatherForLocation(2487956)
     }
 
     private fun observeHomeState() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.statesAsFlow.collect { homeState ->
                 when (homeState) {
-                    is HomeState.OnFetchTimelines -> onFetchTimelines(homeState)
+                    is HomeState.OnFetchWeatherForLocation -> onFetchWeatherForLocation(homeState.result)
                 }
             }
         }
@@ -73,17 +71,23 @@ class HomeFragment : BaseFragment() {
     private fun observeLoadingState() {
         viewModel.loadingState.observe(viewLifecycleOwner, { state ->
             when (state) {
-                is LoadingState.OnLoading -> binding.loading.isVisible = true
-                is LoadingState.OnIdle -> binding.loading.isVisible = false
+//                is LoadingState.OnLoading -> binding.loading.isVisible = true
+//                is LoadingState.OnIdle -> binding.loading.isVisible = false
             }
         })
     }
 
-    private fun onFetchTimelines(homeState: HomeState.OnFetchTimelines) {
-        Toast.makeText(
-            requireContext(),
-            "${homeState.result.size}",
-            Toast.LENGTH_SHORT
-        ).show()
+    private fun onFetchWeatherForLocation(weatherForLocation: WeatherForLocation) {
+        binding.apply {
+            citiesName.text = weatherForLocation.cityTitle
+            pressureTextView.text = weatherForLocation.consolidatedWeather[0].airPressure.toString()
+            humidityTextView.text = "${weatherForLocation.consolidatedWeather[0].humidity}%"
+            windSpeedTextView.text = "${weatherForLocation.consolidatedWeather[0].windSpeed}m/s"
+            temperatureTextView.text = "${weatherForLocation.consolidatedWeather[0].theTemp}"
+            when (weatherForLocation.consolidatedWeather[0].weatherStateAbbr) {
+                "lc" -> weatherImageView.load(R.drawable.ic_light_cloudy)
+                else -> weatherImageView.load(R.drawable.ic_sun)
+            }
+        }
     }
 }
