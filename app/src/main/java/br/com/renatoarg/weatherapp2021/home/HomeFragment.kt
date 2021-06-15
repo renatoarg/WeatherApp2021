@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import br.com.renatoarg.data.entity.WeatherForLocation
 import br.com.renatoarg.weatherapp2021.ErrorState
@@ -14,6 +15,7 @@ import br.com.renatoarg.weatherapp2021.databinding.FragmentHomeBinding
 import coil.load
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import timber.log.Timber
 
 @ExperimentalUnsignedTypes
 class HomeFragment : BaseFragment() {
@@ -35,15 +37,18 @@ class HomeFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         observeHomeState()
         observeErrorState()
-        observeLoadingState()
         viewModel.fetchWeatherForLocation(2487956)
     }
 
     private fun observeHomeState() {
+        Timber.d("observeHomeState:")
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.statesAsFlow.collect { homeState ->
-                when (homeState) {
-                    is HomeState.OnFetchWeatherForLocation -> onFetchWeatherForLocation(homeState.result)
+            viewModel.container.stateFlow.collect { homeState ->
+                homeState.weatherForLocation?.let {
+                    onFetchWeatherForLocation(it)
+                }
+                homeState.isLoading.let {
+                    binding.loading.isVisible = it
                 }
             }
         }
@@ -66,15 +71,6 @@ class HomeFragment : BaseFragment() {
             "OnError: $error",
             Toast.LENGTH_SHORT
         ).show()
-    }
-
-    private fun observeLoadingState() {
-        viewModel.loadingState.observe(viewLifecycleOwner, { state ->
-            when (state) {
-//                is LoadingState.OnLoading -> binding.loading.isVisible = true
-//                is LoadingState.OnIdle -> binding.loading.isVisible = false
-            }
-        })
     }
 
     private fun onFetchWeatherForLocation(weatherForLocation: WeatherForLocation) {
