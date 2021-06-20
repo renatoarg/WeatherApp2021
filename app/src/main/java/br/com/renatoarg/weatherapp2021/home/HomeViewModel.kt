@@ -4,7 +4,7 @@ import br.com.renatoarg.data.BaseResponse
 import br.com.renatoarg.data.NetworkHelper
 import br.com.renatoarg.data.entity.WeatherForLocation
 import br.com.renatoarg.data.home.HomeRepository
-import br.com.renatoarg.weatherapp2021.HomeActivity
+import br.com.renatoarg.weatherapp2021.MainActivity
 import com.airbnb.mvrx.MavericksViewModel
 import com.airbnb.mvrx.MavericksViewModelFactory
 import com.airbnb.mvrx.ViewModelContext
@@ -29,7 +29,7 @@ class HomeViewModel(
 
     companion object : MavericksViewModelFactory<HomeViewModel, HomeState> {
         override fun create(viewModelContext: ViewModelContext, state: HomeState): HomeViewModel? {
-            return HomeViewModel(state, viewModelContext.activity<HomeActivity>().repository)
+            return HomeViewModel(state, viewModelContext.activity<MainActivity>().repository)
         }
     }
 

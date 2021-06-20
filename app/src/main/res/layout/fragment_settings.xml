@@ -1,14 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".settings.SettingsFragment">
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingTop="@dimen/l_vertical_spacing">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <!-- Temperature in Metric -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/unit_for_temperature_label_text_view"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/m_horizontal_spacing"
+        android:text="@string/temperature_in_metric"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/unit_for_temperature_text_view"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/xs_horizontal_spacing"
+        app:layout_constraintStart_toEndOf="@id/unit_for_temperature_label_text_view"
+        app:layout_constraintTop_toTopOf="@id/unit_for_temperature_label_text_view"
+        tools:text="(F)"/>
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/temperature_in_metric_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/m_horizontal_spacing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/unit_for_temperature_label_text_view"/>
+
+    <!-- Speed in Metric -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/unit_for_speed_label_text_view"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/m_horizontal_spacing"
+        android:layout_marginTop="@dimen/m_vertical_spacing"
+        android:text="@string/speed_in_metric"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/unit_for_temperature_label_text_view" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/unit_for_speed_text_view"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/xs_horizontal_spacing"
+        app:layout_constraintStart_toEndOf="@id/unit_for_speed_label_text_view"
+        app:layout_constraintTop_toTopOf="@id/unit_for_speed_label_text_view"
+        tools:text="(ft/s)"/>
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/speed_in_metric_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/m_horizontal_spacing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/unit_for_speed_label_text_view"/>
+
+    <!-- Dark Theme -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/dark_theme_label_text_view"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/m_horizontal_spacing"
+        android:layout_marginTop="@dimen/m_vertical_spacing"
+        android:text="@string/dark_mode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/unit_for_speed_label_text_view" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/dark_theme_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/m_horizontal_spacing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/dark_theme_label_text_view"/>
+
+    <!-- Divider Line -->
+    <View
+        android:id="@+id/developer_tools_divider_line"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/gray"
+        android:layout_marginTop="@dimen/l_vertical_spacing"
+        android:layout_marginStart="@dimen/m_horizontal_spacing"
+        android:layout_marginEnd="@dimen/m_horizontal_spacing"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dark_theme_label_text_view"/>
+
+    <!-- Theming System -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/theming_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/theming"
+        android:layout_marginStart="@dimen/m_horizontal_spacing"
+        android:layout_marginTop="@dimen/l_vertical_spacing"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/developer_tools_divider_line"/>
+
+    <!-- Widgets -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/widgets_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/widgets"
+        android:layout_marginStart="@dimen/m_horizontal_spacing"
+        android:layout_marginTop="@dimen/m_vertical_spacing"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/theming_button"/>
+
+    <!-- Sample Pages -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/sample_pages_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sample_pages"
+        android:layout_marginStart="@dimen/m_horizontal_spacing"
+        android:layout_marginTop="@dimen/m_vertical_spacing"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/widgets_button"/>
+
+    <!-- Design Tokens -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/design_tokens_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/design_tokens"
+        android:layout_marginStart="@dimen/m_horizontal_spacing"
+        android:layout_marginTop="@dimen/m_vertical_spacing"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sample_pages_button"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
