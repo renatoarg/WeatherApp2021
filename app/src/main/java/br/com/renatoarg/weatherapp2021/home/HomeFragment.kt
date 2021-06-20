@@ -4,26 +4,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.Fragment
 import br.com.renatoarg.data.entity.WeatherForLocation
-import br.com.renatoarg.weatherapp2021.ErrorState
 import br.com.renatoarg.weatherapp2021.R
-import br.com.renatoarg.weatherapp2021.base.BaseFragment
 import br.com.renatoarg.weatherapp2021.databinding.FragmentHomeBinding
 import coil.load
-import kotlinx.coroutines.flow.collect
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import timber.log.Timber
+import com.airbnb.mvrx.MavericksView
+import com.airbnb.mvrx.fragmentViewModel
+import com.airbnb.mvrx.withState
+import kotlinx.coroutines.DelicateCoroutinesApi
 
+@DelicateCoroutinesApi
 @ExperimentalUnsignedTypes
-class HomeFragment : BaseFragment() {
+class HomeFragment : Fragment(R.layout.fragment_home), MavericksView {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    override val viewModel: HomeViewModel by sharedViewModel()
+    private val viewModel: HomeViewModel by fragmentViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,55 +34,33 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeHomeState()
-        observeErrorState()
         viewModel.fetchWeatherForLocation(2487956)
     }
 
-    private fun observeHomeState() {
-        Timber.d("observeHomeState:")
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.container.stateFlow.collect { homeState ->
-                homeState.weatherForLocation?.let {
-                    onFetchWeatherForLocation(it)
-                }
-                homeState.isLoading.let {
-                    binding.loading.isVisible = it
+    private fun onFetchWeatherForLocation(weatherForLocation: WeatherForLocation?) {
+        weatherForLocation?.let {
+            binding.apply {
+                citiesName.text = it.cityTitle
+                pressureTextView.text = it.consolidatedWeather[0].airPressure.toString()
+                humidityTextView.text = "${it.consolidatedWeather[0].humidity}%"
+                windSpeedTextView.text = "${it.consolidatedWeather[0].windSpeed}m/s"
+                temperatureTextView.text = "${it.consolidatedWeather[0].theTemp}"
+                when (it.consolidatedWeather[0].weatherStateAbbr) {
+                    "lc" -> weatherImageView.load(R.drawable.ic_light_cloudy)
+                    else -> weatherImageView.load(R.drawable.ic_sun)
                 }
             }
         }
     }
 
-    private fun observeErrorState() {
-        viewModel.errorState.observe(viewLifecycleOwner, { state ->
-            when (state) {
-                is ErrorState.OnError -> showToast(state.error)
-                else -> {
-                    // do nothing
-                }
-            }
-        })
+
+    override fun invalidate() = withState(viewModel) { state ->
+        onFetchWeatherForLocation(state.weatherForLocation)
+        onUpdateLoading(state.isLoading)
     }
 
-    private fun showToast(error: String) {
-        Toast.makeText(
-            requireContext(),
-            "OnError: $error",
-            Toast.LENGTH_SHORT
-        ).show()
-    }
-
-    private fun onFetchWeatherForLocation(weatherForLocation: WeatherForLocation) {
-        binding.apply {
-            citiesName.text = weatherForLocation.cityTitle
-            pressureTextView.text = weatherForLocation.consolidatedWeather[0].airPressure.toString()
-            humidityTextView.text = "${weatherForLocation.consolidatedWeather[0].humidity}%"
-            windSpeedTextView.text = "${weatherForLocation.consolidatedWeather[0].windSpeed}m/s"
-            temperatureTextView.text = "${weatherForLocation.consolidatedWeather[0].theTemp}"
-            when (weatherForLocation.consolidatedWeather[0].weatherStateAbbr) {
-                "lc" -> weatherImageView.load(R.drawable.ic_light_cloudy)
-                else -> weatherImageView.load(R.drawable.ic_sun)
-            }
-        }
+    private fun onUpdateLoading(isLoading: Boolean) {
+        binding.progressBar.isVisible = isLoading
+        binding.homeViewsGroup.isVisible = !isLoading
     }
 }

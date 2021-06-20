@@ -7,6 +7,22 @@
     android:clickable="true"
     android:focusable="true">
 
+    <androidx.constraintlayout.widget.Group
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/homeViewsGroup"
+        app:constraint_referenced_ids="
+        cities_view_pager_outer_layout,
+        temperature_text_view,
+        weather_image_view,
+        pressure_label_text_view,
+        pressure_text_view,
+        humidity_label_text_view,
+        humidity_text_view,
+        wind_speed_label_text_view,
+        wind_speed_text_view,
+        date_time_text_view"/>
+
     <br.com.renatoarg.weatherapp2021.home.NestedScrollableHost
         android:id="@+id/cities_view_pager_outer_layout"
         android:layout_width="match_parent"
@@ -149,25 +165,4 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:visibility="visible" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/loading"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:showIn="@layout/fragment_home">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha=".3"
-            android:background="@color/black" />
-
-        <ProgressBar
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,21 +1,24 @@
-package br.com.renatoarg.weatherapp2021.home
+package br.com.renatoarg.weatherapp2021
 
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import br.com.renatoarg.weatherapp2021.R
+import br.com.renatoarg.data.home.HomeRepository
 import br.com.renatoarg.weatherapp2021.base.BaseActivity
-import br.com.renatoarg.weatherapp2021.databinding.ActivityHomeBinding
+import br.com.renatoarg.weatherapp2021.databinding.ActivityMainBinding
+import org.koin.android.ext.android.inject
 
 class HomeActivity : BaseActivity() {
 
-    private lateinit var binding: ActivityHomeBinding
+    private lateinit var binding: ActivityMainBinding
 
     private lateinit var navHostFragment: NavHostFragment
 
+    val repository: HomeRepository by inject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
         setupNavController()

@@ -73,6 +73,9 @@ dependencies {
     // Orbit
     implementation("org.orbit-mvi:orbit-viewmodel:3.1.1")
 
+    // Maverick
+    implementation 'com.airbnb.android:mavericks:2.3.0'
+
     // Timber
     implementation "com.jakewharton.timber:timber:4.7.1"
 

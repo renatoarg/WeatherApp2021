@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.HomeActivity">
+    tools:context=".HomeActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host"
@@ -22,8 +22,6 @@
         android:id="@+id/bottom_menu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:itemIconTint="@android:color/white"
-        app:itemTextColor="@android:color/white"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
