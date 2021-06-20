@@ -1,6 +1,6 @@
 package br.com.renatoarg.weatherapp2021.settings
 
-import br.com.renatoarg.data.home.HomeRepository
+import br.com.renatoarg.data.api.home.HomeRepository
 import br.com.renatoarg.weatherapp2021.MainActivity
 import com.airbnb.mvrx.MavericksViewModel
 import com.airbnb.mvrx.MavericksViewModelFactory

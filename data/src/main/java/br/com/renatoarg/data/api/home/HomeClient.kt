@@ -1,8 +1,8 @@
-package br.com.renatoarg.data.home
+package br.com.renatoarg.data.api.home
 
 import br.com.renatoarg.data.BuildConfig
-import br.com.renatoarg.data.base.BaseApiClient
-import br.com.renatoarg.data.base.RequestInterceptor
+import br.com.renatoarg.data.api.base.BaseApiClient
+import br.com.renatoarg.data.api.base.RequestInterceptor
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

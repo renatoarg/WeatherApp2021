@@ -6,8 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import br.com.renatoarg.data.entity.WeatherForLocation
+import br.com.renatoarg.data.api.entity.WeatherForLocation
 import br.com.renatoarg.weatherapp2021.R
+import br.com.renatoarg.weatherapp2021.base.BaseFragment
 import br.com.renatoarg.weatherapp2021.databinding.FragmentHomeBinding
 import coil.load
 import com.airbnb.mvrx.MavericksView
@@ -17,7 +18,7 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 
 @DelicateCoroutinesApi
 @ExperimentalUnsignedTypes
-class HomeFragment : Fragment(R.layout.fragment_home), MavericksView {
+class HomeFragment : BaseFragment(R.layout.fragment_home), MavericksView {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!

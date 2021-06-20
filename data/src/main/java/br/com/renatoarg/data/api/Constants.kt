@@ -1,4 +1,4 @@
-package br.com.renatoarg.data
+package br.com.renatoarg.data.api
 
 class Constants {
 

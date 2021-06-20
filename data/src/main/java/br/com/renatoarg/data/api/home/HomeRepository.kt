@@ -1,9 +1,8 @@
-package br.com.renatoarg.data.home
+package br.com.renatoarg.data.api.home
 
-import br.com.renatoarg.data.APIResponse
-import br.com.renatoarg.data.Constants.Companion.UNEXPECTED_ERROR
-import br.com.renatoarg.data.entity.ConsolidatedWeather
-import br.com.renatoarg.data.entity.WeatherForLocation
+import br.com.renatoarg.data.api.APIResponse
+import br.com.renatoarg.data.api.Constants.Companion.UNEXPECTED_ERROR
+import br.com.renatoarg.data.api.entity.WeatherForLocation
 import retrofit2.HttpException
 
 class HomeRepository(

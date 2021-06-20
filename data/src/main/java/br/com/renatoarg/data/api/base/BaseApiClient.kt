@@ -1,4 +1,4 @@
-package br.com.renatoarg.data.base
+package br.com.renatoarg.data.api.base
 
 import com.google.gson.Gson
 import okhttp3.OkHttpClient

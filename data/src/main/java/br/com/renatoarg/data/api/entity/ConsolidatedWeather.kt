@@ -1,4 +1,4 @@
-package br.com.renatoarg.data.entity
+package br.com.renatoarg.data.api.entity
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,17 +1,17 @@
-package br.com.renatoarg.data.entity
+package br.com.renatoarg.data.api.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class Location(
+data class Region(
     @SerializedName("title")
-    val cityTitle: String,
+    val title: String,
 
     @SerializedName("location_type")
-    val location_type: String,
+    val locationType: String,
 
     @SerializedName("woeid")
     val whereOnEarthId: Int,
 
     @SerializedName("latt_long")
-    val lat_long: String
+    val lat_long: String,
 )

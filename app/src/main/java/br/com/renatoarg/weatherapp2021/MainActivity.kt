@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import br.com.renatoarg.data.home.HomeRepository
+import br.com.renatoarg.data.api.home.HomeRepository
 import br.com.renatoarg.weatherapp2021.base.BaseActivity
 import br.com.renatoarg.weatherapp2021.cities.CitiesFragment
 import br.com.renatoarg.weatherapp2021.databinding.ActivityMainBinding

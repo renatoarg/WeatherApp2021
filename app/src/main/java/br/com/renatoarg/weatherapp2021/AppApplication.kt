@@ -1,6 +1,8 @@
 package br.com.renatoarg.weatherapp2021
 
 import android.app.Application
+import br.com.renatoarg.weatherapp2021.modules.homeModule
+import br.com.renatoarg.weatherapp2021.modules.sharedPrefsModule
 import com.airbnb.mvrx.Mavericks
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -21,7 +23,8 @@ class AppApplication : Application() {
             androidLogger()
             androidContext(this@AppApplication)
             modules(
-                homeModule
+                homeModule,
+                sharedPrefsModule
             )
         }
 

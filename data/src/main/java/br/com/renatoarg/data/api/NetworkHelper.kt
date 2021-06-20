@@ -1,4 +1,4 @@
-package br.com.renatoarg.data
+package br.com.renatoarg.data.api
 
 object NetworkHelper {
     inline fun <T> makeApiCall(apiCall: () -> APIResponse<T>): BaseResponse<T> {

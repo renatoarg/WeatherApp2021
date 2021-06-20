@@ -1,9 +1,9 @@
 package br.com.renatoarg.weatherapp2021.home
 
-import br.com.renatoarg.data.BaseResponse
-import br.com.renatoarg.data.NetworkHelper
-import br.com.renatoarg.data.entity.WeatherForLocation
-import br.com.renatoarg.data.home.HomeRepository
+import br.com.renatoarg.data.api.BaseResponse
+import br.com.renatoarg.data.api.NetworkHelper
+import br.com.renatoarg.data.api.entity.WeatherForLocation
+import br.com.renatoarg.data.api.home.HomeRepository
 import br.com.renatoarg.weatherapp2021.MainActivity
 import com.airbnb.mvrx.MavericksViewModel
 import com.airbnb.mvrx.MavericksViewModelFactory

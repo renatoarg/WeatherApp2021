@@ -1,4 +1,4 @@
-package br.com.renatoarg.data.base
+package br.com.renatoarg.data.api.base
 
 import okhttp3.Interceptor
 import okhttp3.Response

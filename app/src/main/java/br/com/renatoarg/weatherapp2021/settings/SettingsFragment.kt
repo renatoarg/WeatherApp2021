@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import br.com.renatoarg.weatherapp2021.MainActivity
 import br.com.renatoarg.weatherapp2021.R
+import br.com.renatoarg.weatherapp2021.base.BaseFragment
 import br.com.renatoarg.weatherapp2021.databinding.FragmentSettingsBinding
+import br.com.renatoarg.weatherapp2021.settings.SettingsConstants.DARK_MODE_PREF
 import com.airbnb.mvrx.MavericksView
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
@@ -15,7 +16,7 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 
 @DelicateCoroutinesApi
 @ExperimentalUnsignedTypes
-class SettingsFragment : Fragment(R.layout.fragment_settings), MavericksView {
+class SettingsFragment : BaseFragment(R.layout.fragment_settings), MavericksView {
 
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
@@ -32,8 +33,12 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), MavericksView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.darkThemeSwitch.setOnCheckedChangeListener { _, isChecked ->
-            (activity as MainActivity).applyDarkTheme(isChecked)
+        binding.darkThemeSwitch.apply {
+            isChecked = sharedPreferences.readBoolean(DARK_MODE_PREF)
+            setOnCheckedChangeListener { _, isChecked ->
+                (activity as MainActivity).applyDarkTheme(isChecked)
+                sharedPreferences.write(DARK_MODE_PREF, isChecked)
+            }
         }
     }
 
