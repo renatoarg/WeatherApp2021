@@ -4,8 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import br.com.renatoarg.data.api.entity.WeatherForLocation
 import br.com.renatoarg.weatherapp2021.R
 import br.com.renatoarg.weatherapp2021.base.BaseFragment
@@ -15,6 +16,7 @@ import com.airbnb.mvrx.MavericksView
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.flow.collect
 
 @DelicateCoroutinesApi
 @ExperimentalUnsignedTypes
@@ -36,6 +38,29 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), MavericksView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.fetchWeatherForLocation(2487956)
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.sideEffectsFlow.collect { sideEffect ->
+                when (sideEffect) {
+                    is HomeSideEffects.OnShowToast -> Toast.makeText(
+                        requireContext(),
+                        "Unique toast",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                    is HomeSideEffects.OnShowToast2 -> Toast.makeText(
+                        requireContext(),
+                        "Unique toast 2",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+            }
+        }
+
+        binding.weatherImageView.setOnClickListener {
+            viewModel.sendImageSideEffect()
+        }
     }
 
     private fun onFetchWeatherForLocation(weatherForLocation: WeatherForLocation?) {
@@ -53,7 +78,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), MavericksView {
             }
         }
     }
-
 
     override fun invalidate() = withState(viewModel) { state ->
         onFetchWeatherForLocation(state.weatherForLocation)
