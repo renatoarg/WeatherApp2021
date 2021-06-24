@@ -72,6 +72,7 @@ dependencies {
 
     // Orbit
     implementation("org.orbit-mvi:orbit-viewmodel:3.1.1")
+    implementation("org.orbit-mvi:orbit-core:3.1.1")
 
     // Timber
     implementation "com.jakewharton.timber:timber:4.7.1"
@@ -83,6 +84,8 @@ dependencies {
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
     testImplementation 'androidx.arch.core:core-testing:2.1.0'
     testImplementation 'io.mockk:mockk:1.10.0'
+    testImplementation 'org.orbit-mvi:orbit-test:3.1.1'
+
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
