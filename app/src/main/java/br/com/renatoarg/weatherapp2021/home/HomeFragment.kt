@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import br.com.renatoarg.data.entity.WeatherForLocation
 import br.com.renatoarg.weatherapp2021.ErrorState
@@ -14,16 +15,17 @@ import br.com.renatoarg.weatherapp2021.base.BaseFragment
 import br.com.renatoarg.weatherapp2021.databinding.FragmentHomeBinding
 import coil.load
 import kotlinx.coroutines.flow.collect
+import org.koin.androidx.viewmodel.compat.SharedViewModelCompat.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 
 @ExperimentalUnsignedTypes
-class HomeFragment : BaseFragment() {
+class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    override val viewModel: HomeViewModel by sharedViewModel()
+    private val viewModel: HomeViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +38,6 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeHomeState()
-        observeErrorState()
         viewModel.fetchWeatherForLocation(2487956)
     }
 
@@ -52,25 +53,6 @@ class HomeFragment : BaseFragment() {
                 }
             }
         }
-    }
-
-    private fun observeErrorState() {
-        viewModel.errorState.observe(viewLifecycleOwner, { state ->
-            when (state) {
-                is ErrorState.OnError -> showToast(state.error)
-                else -> {
-                    // do nothing
-                }
-            }
-        })
-    }
-
-    private fun showToast(error: String) {
-        Toast.makeText(
-            requireContext(),
-            "OnError: $error",
-            Toast.LENGTH_SHORT
-        ).show()
     }
 
     private fun onFetchWeatherForLocation(weatherForLocation: WeatherForLocation) {

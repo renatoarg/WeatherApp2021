@@ -1,5 +1,6 @@
 package br.com.renatoarg.weatherapp2021.home
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.renatoarg.data.BaseResponse
 import br.com.renatoarg.data.NetworkHelper
@@ -19,7 +20,7 @@ import org.orbitmvi.orbit.viewmodel.container
 @ExperimentalUnsignedTypes
 class HomeViewModel constructor(
     private val repository: HomeRepository
-) : ContainerHost<HomeState, HomeSideEffect>, BaseViewModel() {
+) : ContainerHost<HomeState, HomeSideEffect>, ViewModel() {
 
     // Include `orbit-viewmodel` for the factory function
     override val container =
@@ -45,13 +46,12 @@ class HomeViewModel constructor(
     }
 
     fun fetchWeatherForLocation(locationId: Int) {
-        launch {
+        viewModelScope.launch {
             showLoading(true)
-            when (val response =
-                NetworkHelper.makeApiCall { repository.fetchWeatherForLocation(locationId) }) {
+            val response =
+                NetworkHelper.makeApiCall { repository.fetchWeatherForLocation(locationId) }
+            when (response) {
                 is BaseResponse.Success -> update(response.data)
-                is BaseResponse.HttpError -> super.emitErrorState(ErrorState.OnHttpError(response.errorMessage))
-                is BaseResponse.Error -> super.emitErrorState(ErrorState.OnError(response.errorMessage))
             }
             showLoading(false)
         }

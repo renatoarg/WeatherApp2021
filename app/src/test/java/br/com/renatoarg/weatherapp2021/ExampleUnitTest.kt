@@ -6,8 +6,11 @@ import br.com.renatoarg.weatherapp2021.home.HomeState
 import br.com.renatoarg.weatherapp2021.home.HomeViewModel
 import com.google.gson.Gson
 import com.nhaarman.mockitokotlin2.whenever
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.setMain
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -20,11 +23,14 @@ import org.orbitmvi.orbit.test
 @ExperimentalCoroutinesApi
 class ExampleUnitTest {
 
+    private val testDispatcher = TestCoroutineDispatcher()
+
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
     @Before
     fun setUp() {
+        Dispatchers.setMain(testDispatcher)
         MockitoAnnotations.initMocks(this)
     }
 
@@ -60,7 +66,7 @@ val mockData: String = """
            "consolidated_weather":[
               {
                  "id":1,
-                 "weather_state_name":"Heavy Cloud",
+                 "weather_state_name":"Renato Heavy Cloud",
                  "weather_state_abbr":"hc",
                  "wind_direction_compass":"SW",
                  "created":"2021-06-22T18:32:16.777298Z",
