@@ -1,11 +1,14 @@
 package br.com.renatoarg.weatherapp2021.home
 
+import androidx.lifecycle.viewModelScope
 import br.com.renatoarg.data.BaseResponse
 import br.com.renatoarg.data.NetworkHelper
 import br.com.renatoarg.data.entity.WeatherForLocation
 import br.com.renatoarg.data.home.HomeRepository
 import br.com.renatoarg.weatherapp2021.ErrorState
 import br.com.renatoarg.weatherapp2021.base.BaseViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
