@@ -40,26 +40,16 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), MavericksView {
         viewModel.fetchWeatherForLocation(2487956)
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.sideEffectsFlow.collect { sideEffect ->
+            viewModel.homeSideEffects.collect { sideEffect ->
                 when (sideEffect) {
-                    is HomeSideEffects.OnShowToast -> Toast.makeText(
+                    is HomeFragmentSideEffects.OnShowToast -> Toast.makeText(
                         requireContext(),
                         "Unique toast",
                         Toast.LENGTH_SHORT
                     )
                         .show()
-                    is HomeSideEffects.OnShowToast2 -> Toast.makeText(
-                        requireContext(),
-                        "Unique toast 2",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
                 }
             }
-        }
-
-        binding.weatherImageView.setOnClickListener {
-            viewModel.sendImageSideEffect()
         }
     }
 

@@ -1,6 +1,7 @@
 package br.com.renatoarg.weatherapp2021.home
 
 import br.com.renatoarg.data.api.BaseResponse
+import br.com.renatoarg.data.api.Constants.Companion.UNEXPECTED_ERROR
 import br.com.renatoarg.data.api.NetworkHelper
 import br.com.renatoarg.data.api.entity.WeatherForLocation
 import br.com.renatoarg.data.api.home.HomeRepository
@@ -17,55 +18,62 @@ import kotlinx.coroutines.launch
 @DelicateCoroutinesApi
 @ExperimentalUnsignedTypes
 class HomeViewModel(
-    state: HomeState,
+    viewState: HomeViewState,
     private val repository: HomeRepository
-) : MavericksViewModel<HomeState>(state) {
+) : MavericksViewModel<HomeViewState>(viewState) {
 
-    private val sideEffectsChannel = Channel<HomeSideEffects>(Channel.BUFFERED)
-    val sideEffectsFlow: Flow<HomeSideEffects> = sideEffectsChannel.receiveAsFlow()
+    private val homeSideEffectsChannel = Channel<HomeFragmentSideEffects>(Channel.BUFFERED)
+    val homeSideEffects: Flow<HomeFragmentSideEffects> = homeSideEffectsChannel.receiveAsFlow()
 
-    private val firedSideEffectEvents = ArrayList<HomeSideEffects>()
+    private val firedSideEffectEvents = ArrayList<HomeFragmentSideEffects>()
 
-    private fun updateWeatherForLocation(data: WeatherForLocation) = setState {
+    private fun onUpdateData(data: WeatherForLocation) = setState {
         copy(weatherForLocation = data)
     }
 
-    private fun updateLoading(isLoading: Boolean) = setState {
+    private fun onLoading(isLoading: Boolean) = setState {
         copy(isLoading = isLoading)
     }
 
-    companion object : MavericksViewModelFactory<HomeViewModel, HomeState> {
-        override fun create(viewModelContext: ViewModelContext, state: HomeState): HomeViewModel? {
+    private fun onHttpError(httpErrorMessage: String?) = setState {
+        copy(httpErrorMessage = httpErrorMessage ?: UNEXPECTED_ERROR)
+    }
+
+    private fun onError(errorMessage: String?) = setState {
+        copy(errorMessage = errorMessage ?: UNEXPECTED_ERROR)
+    }
+
+    companion object : MavericksViewModelFactory<HomeViewModel, HomeViewState> {
+        override fun create(
+            viewModelContext: ViewModelContext,
+            state: HomeViewState
+        ): HomeViewModel {
             return HomeViewModel(state, viewModelContext.activity<MainActivity>().repository)
         }
     }
 
     fun fetchWeatherForLocation(locationId: Int) {
         viewModelScope.launch {
-            updateLoading(true)
+            onLoading(true)
             when (val response =
                 NetworkHelper.makeApiCall { repository.fetchWeatherForLocation(locationId) }) {
-                is BaseResponse.Success -> {
-                    updateWeatherForLocation(response.data)
-                    fireSideEffectEvent(HomeSideEffects.OnShowToast)
-                }
-//                is BaseResponse.HttpError -> super.emitErrorState(ErrorState.OnHttpError(response.errorMessage))
-//                is BaseResponse.Error -> super.emitErrorState(ErrorState.OnError(response.errorMessage))
+                is BaseResponse.Success -> onSuccess(response)
+                is BaseResponse.Error -> onError(response.errorMessage)
+                is BaseResponse.HttpError -> onHttpError(response.errorMessage)
             }
-            updateLoading(false)
+            onLoading(false)
         }
     }
 
-    private suspend fun fireSideEffectEvent(event: HomeSideEffects) {
+    private suspend fun onSuccess(response: BaseResponse.Success<WeatherForLocation>) {
+        onUpdateData(response.data)
+        fireSideEffectEvent(HomeFragmentSideEffects.OnShowToast)
+    }
+
+    private suspend fun fireSideEffectEvent(event: HomeFragmentSideEffects) {
         if (!firedSideEffectEvents.contains(event)) {
-            sideEffectsChannel.send(event)
+            homeSideEffectsChannel.send(event)
             firedSideEffectEvents.add(event)
-        }
-    }
-
-    fun sendImageSideEffect() {
-        viewModelScope.launch {
-            fireSideEffectEvent(HomeSideEffects.OnShowToast2)
         }
     }
 }
