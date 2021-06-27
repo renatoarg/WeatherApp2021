@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import br.com.renatoarg.data.api.entity.WeatherForLocation
+import br.com.renatoarg.data.api.home.entity.WeatherForLocation
 import br.com.renatoarg.weatherapp2021.R
 import br.com.renatoarg.weatherapp2021.base.BaseFragment
 import br.com.renatoarg.weatherapp2021.databinding.FragmentHomeBinding
@@ -42,7 +42,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), MavericksView {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.homeSideEffects.collect { sideEffect ->
                 when (sideEffect) {
-                    is HomeFragmentSideEffects.OnShowToast -> Toast.makeText(
+                    is HomeSideEffects.OnShowToast -> Toast.makeText(
                         requireContext(),
                         "Unique toast",
                         Toast.LENGTH_SHORT

@@ -1,19 +1,16 @@
 package br.com.renatoarg.weatherapp2021
 
-import br.com.renatoarg.data.api.entity.WeatherForLocation
+import br.com.renatoarg.data.api.home.entity.WeatherForLocation
 import br.com.renatoarg.data.api.home.HomeRepository
 import br.com.renatoarg.weatherapp2021.home.HomeViewModel
 import br.com.renatoarg.weatherapp2021.home.HomeViewState
 import com.airbnb.mvrx.test.MvRxTestRule
 import com.airbnb.mvrx.withState
 import com.google.gson.Gson
-import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import kotlinx.coroutines.test.setMain
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.ClassRule

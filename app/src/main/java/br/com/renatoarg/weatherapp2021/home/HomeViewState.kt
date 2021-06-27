@@ -1,6 +1,6 @@
 package br.com.renatoarg.weatherapp2021.home
 
-import br.com.renatoarg.data.api.entity.WeatherForLocation
+import br.com.renatoarg.data.api.home.entity.WeatherForLocation
 import com.airbnb.mvrx.MavericksState
 
 data class HomeViewState(

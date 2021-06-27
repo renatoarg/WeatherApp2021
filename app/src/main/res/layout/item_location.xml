@@ -4,15 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:id="@+id/wrapper"
+    android:foreground="?attr/selectableItemBackground">
 
     <TextView
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:id="@+id/tvWhereInWorldLabel"
+        android:id="@+id/tvLocationName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         tools:text="San Francisco"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

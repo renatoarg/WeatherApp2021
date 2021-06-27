@@ -17,8 +17,8 @@
 
     <dialog
         android:id="@+id/addPlaceFragment"
-        android:name="br.com.renatoarg.weatherapp2021.addplace.AddPlaceFragment"
+        android:name="br.com.renatoarg.weatherapp2021.locations.LocationsFragment"
         android:label="fragment_add_place"
-        tools:layout="@layout/fragment_add_place" />
+        tools:layout="@layout/fragment_locations" />
 
 </navigation>

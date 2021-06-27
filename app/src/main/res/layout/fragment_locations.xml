@@ -4,9 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".addplace.AddPlaceFragment">
+    tools:context=".locations.LocationsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginTop="16dp"
+        style="@style/BottomSheet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp">
@@ -44,15 +46,18 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tilSearch"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:orientation="vertical"
             tools:itemCount="4"
             tools:layout_editor_absoluteX="16dp"
-            tools:listitem="@layout/item_where_in_the_world" />
+            tools:listitem="@layout/item_location" />
 
         <TextView
+            android:id="@+id/tvEmptyLocations"
             android:layout_marginTop="16dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/white"
+            android:background="@color/colorOnPrimaryLight"
             android:gravity="center"
             android:text="@string/no_places_to_show"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"

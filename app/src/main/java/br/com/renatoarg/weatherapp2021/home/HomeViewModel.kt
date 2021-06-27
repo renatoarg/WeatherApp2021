@@ -1,9 +1,9 @@
 package br.com.renatoarg.weatherapp2021.home
 
-import br.com.renatoarg.data.api.BaseResponse
+import br.com.renatoarg.data.api.Response
 import br.com.renatoarg.data.api.Constants.Companion.UNEXPECTED_ERROR
-import br.com.renatoarg.data.api.NetworkHelper
-import br.com.renatoarg.data.api.entity.WeatherForLocation
+import br.com.renatoarg.data.api.APIHelper
+import br.com.renatoarg.data.api.home.entity.WeatherForLocation
 import br.com.renatoarg.data.api.home.HomeRepository
 import br.com.renatoarg.weatherapp2021.MainActivity
 import com.airbnb.mvrx.MavericksViewModel
@@ -22,10 +22,10 @@ class HomeViewModel(
     private val repository: HomeRepository
 ) : MavericksViewModel<HomeViewState>(viewState) {
 
-    private val homeSideEffectsChannel = Channel<HomeFragmentSideEffects>(Channel.BUFFERED)
-    val homeSideEffects: Flow<HomeFragmentSideEffects> = homeSideEffectsChannel.receiveAsFlow()
+    private val homeSideEffectsChannel = Channel<HomeSideEffects>(Channel.BUFFERED)
+    val homeSideEffects: Flow<HomeSideEffects> = homeSideEffectsChannel.receiveAsFlow()
 
-    private val firedSideEffectEvents = ArrayList<HomeFragmentSideEffects>()
+    private val firedSideEffectEvents = ArrayList<HomeSideEffects>()
 
     private fun onUpdateData(data: WeatherForLocation) = setState {
         copy(weatherForLocation = data)
@@ -48,7 +48,7 @@ class HomeViewModel(
             viewModelContext: ViewModelContext,
             state: HomeViewState
         ): HomeViewModel {
-            return HomeViewModel(state, viewModelContext.activity<MainActivity>().repository)
+            return HomeViewModel(state, viewModelContext.activity<MainActivity>().homeRepository)
         }
     }
 
@@ -56,21 +56,21 @@ class HomeViewModel(
         viewModelScope.launch {
             onLoading(true)
             when (val response =
-                NetworkHelper.makeApiCall { repository.fetchWeatherForLocation(locationId, refresh) }) {
-                is BaseResponse.Success -> onSuccess(response)
-                is BaseResponse.Error -> onError(response.errorMessage)
-                is BaseResponse.HttpError -> onHttpError(response.errorMessage)
+                APIHelper.callApi { repository.fetchWeatherForLocation(locationId, refresh) }) {
+                is Response.Success -> onSuccess(response)
+                is Response.Error -> onError(response.errorMessage)
+                is Response.HttpError -> onHttpError(response.errorMessage)
             }
             onLoading(false)
         }
     }
 
-    private suspend fun onSuccess(response: BaseResponse.Success<WeatherForLocation>) {
+    private suspend fun onSuccess(response: Response.Success<WeatherForLocation>) {
         onUpdateData(response.data)
-        fireSideEffectEvent(HomeFragmentSideEffects.OnShowToast)
+        fireSideEffectEvent(HomeSideEffects.OnShowToast)
     }
 
-    private suspend fun fireSideEffectEvent(event: HomeFragmentSideEffects) {
+    private suspend fun fireSideEffectEvent(event: HomeSideEffects) {
         if (!firedSideEffectEvents.contains(event)) {
             homeSideEffectsChannel.send(event)
             firedSideEffectEvents.add(event)

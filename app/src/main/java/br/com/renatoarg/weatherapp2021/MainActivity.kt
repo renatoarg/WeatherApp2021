@@ -1,19 +1,11 @@
 package br.com.renatoarg.weatherapp2021
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.NavHostFragment
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
+import br.com.renatoarg.data.api.locations.LocationsRepository
 import br.com.renatoarg.data.api.home.HomeRepository
 import br.com.renatoarg.weatherapp2021.base.BaseActivity
-import br.com.renatoarg.weatherapp2021.cities.CitiesFragment
 import br.com.renatoarg.weatherapp2021.databinding.ActivityMainBinding
-import br.com.renatoarg.weatherapp2021.home.HomeFragment
-import br.com.renatoarg.weatherapp2021.settings.SettingsFragment
-import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.coroutines.DelicateCoroutinesApi
 import org.koin.android.ext.android.inject
 
 class MainActivity : BaseActivity() {
@@ -22,7 +14,8 @@ class MainActivity : BaseActivity() {
 
     private lateinit var navHostFragment: NavHostFragment
 
-    val repository: HomeRepository by inject()
+    val homeRepository: HomeRepository by inject()
+    val locationsRepository: LocationsRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

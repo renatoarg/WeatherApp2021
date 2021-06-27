@@ -20,7 +20,7 @@ class SettingsViewModel(
 
     companion object : MavericksViewModelFactory<SettingsViewModel, SettingsState> {
         override fun create(viewModelContext: ViewModelContext, state: SettingsState): SettingsViewModel? {
-            return SettingsViewModel(state, viewModelContext.activity<MainActivity>().repository)
+            return SettingsViewModel(state, viewModelContext.activity<MainActivity>().homeRepository)
         }
     }
 }

@@ -2,9 +2,8 @@ package br.com.renatoarg.data.api.home
 
 import br.com.renatoarg.data.api.APIResponse
 import br.com.renatoarg.data.api.Constants.Companion.UNEXPECTED_ERROR
-import br.com.renatoarg.data.api.entity.WeatherForLocation
+import br.com.renatoarg.data.api.home.entity.WeatherForLocation
 import retrofit2.HttpException
-import kotlin.properties.Delegates
 
 class HomeRepository(
     private val client: HomeClient
@@ -14,8 +13,6 @@ class HomeRepository(
 
     private var locationId: Int? = null
     val getLocationId: Int? get() = locationId
-
-
 
     suspend fun fetchWeatherForLocation(
         locationId: Int,
