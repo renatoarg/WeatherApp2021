@@ -60,4 +60,8 @@
     <string name="lorem_ipsum_2">lorem ipsum 2</string>
     <string name="lorem_ipsum_3">lorem ipsum 3</string>
     <string name="design_tokens">Design tokens</string>
+    <string name="where_in_the_world">Where in the world?</string>
+    <string name="search">Search</string>
+    <string name="no_places_to_show">No places to show</string>
+    <string name="my_places">My Places</string>
 </resources>

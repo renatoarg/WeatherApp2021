@@ -51,6 +51,15 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), MavericksView {
                 }
             }
         }
+        setupUi()
+    }
+
+    private fun setupUi() {
+        binding.apply{
+            swiperefresh.setOnRefreshListener {
+                viewModel.onRefresh()
+            }
+        }
     }
 
     private fun onFetchWeatherForLocation(weatherForLocation: WeatherForLocation?) {
@@ -65,6 +74,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), MavericksView {
                     "lc" -> weatherImageView.load(R.drawable.ic_light_cloudy)
                     else -> weatherImageView.load(R.drawable.ic_sun)
                 }
+                swiperefresh.isRefreshing = false
             }
         }
     }
@@ -72,6 +82,22 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), MavericksView {
     override fun invalidate() = withState(viewModel) { state ->
         onFetchWeatherForLocation(state.weatherForLocation)
         onUpdateLoading(state.isLoading)
+        onError(state.errorMessage)
+        onHttpError(state.httpErrorMessage)
+    }
+
+    private fun onError(errorMessage: String?) {
+        errorMessage?.let {
+            binding.swiperefresh.isRefreshing = false
+            showDialog("Error", it)
+        }
+    }
+
+    private fun onHttpError(httpErrorMessage: String?) {
+        httpErrorMessage?.let {
+            binding.swiperefresh.isRefreshing = false
+            showDialog("Error", it)
+        }
     }
 
     private fun onUpdateLoading(isLoading: Boolean) {

@@ -52,11 +52,11 @@ class HomeViewModel(
         }
     }
 
-    fun fetchWeatherForLocation(locationId: Int) {
+    fun fetchWeatherForLocation(locationId: Int, refresh: Boolean = false) {
         viewModelScope.launch {
             onLoading(true)
             when (val response =
-                NetworkHelper.makeApiCall { repository.fetchWeatherForLocation(locationId) }) {
+                NetworkHelper.makeApiCall { repository.fetchWeatherForLocation(locationId, refresh) }) {
                 is BaseResponse.Success -> onSuccess(response)
                 is BaseResponse.Error -> onError(response.errorMessage)
                 is BaseResponse.HttpError -> onHttpError(response.errorMessage)
@@ -74,6 +74,14 @@ class HomeViewModel(
         if (!firedSideEffectEvents.contains(event)) {
             homeSideEffectsChannel.send(event)
             firedSideEffectEvents.add(event)
+        }
+    }
+
+    fun onRefresh() {
+        viewModelScope.launch {
+            repository.getLocationId?.let { locationId ->
+                fetchWeatherForLocation(locationId, refresh = true)
+            }
         }
     }
 }

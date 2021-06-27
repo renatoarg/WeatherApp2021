@@ -7,5 +7,5 @@ import org.koin.dsl.module
 @ExperimentalUnsignedTypes
 val homeModule = module(override = true) {
     single { HomeClient() }
-    single { HomeRepository(get()) }
+    single { HomeRepository(get(),) }
 }

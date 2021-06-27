@@ -39,23 +39,32 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun testIncrementCount() {
+    fun testFetchWeatherForLocationSuccess() {
         val weatherForLocation = Gson().fromJson(mockData, WeatherForLocation::class.java)
-        val weatherForLocation2 = Gson().fromJson(mockData2, WeatherForLocation::class.java)
-
         val viewModel = HomeViewModel(HomeViewState(), repository)
-
         val response =
             MockAPIResponse.getResponse<WeatherForLocation>(true, data = weatherForLocation)
-
         mainCoroutineRule.runBlockingTest {
             whenever(repository.fetchWeatherForLocation(1)).thenReturn(response)
         }
-
         viewModel.fetchWeatherForLocation(1)
-
         withState(viewModel) { state ->
             assertEquals(weatherForLocation, state.weatherForLocation)
+            assertEquals(false, state.isLoading)
+        }
+    }
+
+    @Test
+    fun testFetchWeatherForLocationError() {
+        val viewModel = HomeViewModel(HomeViewState(), repository)
+        val response =
+            MockAPIResponse.getResponse<WeatherForLocation>(false, errorMessage = "Error")
+        mainCoroutineRule.runBlockingTest {
+            whenever(repository.fetchWeatherForLocation(1)).thenReturn(response)
+        }
+        viewModel.fetchWeatherForLocation(1)
+        withState(viewModel) { state ->
+            assertEquals("Error", state.errorMessage)
             assertEquals(false, state.isLoading)
         }
     }

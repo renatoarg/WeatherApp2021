@@ -4,27 +4,41 @@ import br.com.renatoarg.data.api.APIResponse
 import br.com.renatoarg.data.api.Constants.Companion.UNEXPECTED_ERROR
 import br.com.renatoarg.data.api.entity.WeatherForLocation
 import retrofit2.HttpException
+import kotlin.properties.Delegates
 
 class HomeRepository(
     private val client: HomeClient
 ) {
+
     private var responseCache: WeatherForLocation? = null
 
+    private var locationId: Int? = null
+    val getLocationId: Int? get() = locationId
+
+
+
     suspend fun fetchWeatherForLocation(
-        whereOnEarthId: Int,
+        locationId: Int,
         refresh: Boolean = false
     ): APIResponse<WeatherForLocation> {
         return if (responseCache != null && !refresh) {
             APIResponse(data = responseCache)
         } else {
             try {
+                this.locationId = locationId
                 responseCache = client.api.getWeatherForWhereOnEarthId(
-                    whereOnEarthId
+                    locationId
                 )
                 return APIResponse(data = responseCache)
             } catch (e: Exception) {
                 handleError(e)
             }
+        }
+    }
+
+    suspend fun onRefresh() {
+        locationId?.let {
+            fetchWeatherForLocation(it, true)
         }
     }
 

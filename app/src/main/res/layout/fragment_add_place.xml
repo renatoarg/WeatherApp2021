@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".cities.CitiesFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".addplace.AddPlaceFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -12,31 +12,38 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/tvMyPlaces"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/my_places"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:layout_marginTop="16dp"
-            android:id="@+id/btnAddPlace"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/tvAddPlaceTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/add_a_place"
-            app:layout_constraintTop_toBottomOf="@+id/tvMyPlaces"
-            tools:layout_editor_absoluteX="16dp" />
+            android:text="@string/search_for_city"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilSearch"
+            android:layout_marginTop="16dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAddPlaceTitle"
+            android:hint="@string/search"
+            app:startIconDrawable="@drawable/ic_location">
+
+            <EditText
+                android:id="@+id/etSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_marginTop="16dp"
-            android:id="@+id/rvMyPlaces"
+            android:id="@+id/rvSearchPlaces"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnAddPlace"
+            app:layout_constraintTop_toBottomOf="@+id/tilSearch"
             tools:itemCount="4"
             tools:layout_editor_absoluteX="16dp"
             tools:listitem="@layout/item_where_in_the_world" />
@@ -51,7 +58,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnAddPlace"
+            app:layout_constraintTop_toBottomOf="@+id/tilSearch"
             tools:layout_editor_absoluteX="16dp"
             tools:visibility="visible" />
 

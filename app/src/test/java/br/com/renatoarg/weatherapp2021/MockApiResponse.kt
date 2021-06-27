@@ -9,12 +9,12 @@ object MockAPIResponse {
         success: Boolean = true,
         errorMessage: String = "",
         errorCode: Int = 0,
-        data: Any
+        data: Any? = null
     ): APIResponse<T> {
         return if (success) {
-            APIResponse(data as T, errorMessage, errorCode)
+            APIResponse(data as T?, errorMessage, errorCode)
         } else {
-            APIResponse(mockk(), errorMessage, errorCode)
+            APIResponse(data as T?, errorMessage, errorCode)
         }
     }
 }

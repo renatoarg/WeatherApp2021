@@ -3,22 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_main"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/mainFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="br.com.renatoarg.weatherapp2021.home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
-    <fragment
-        android:id="@+id/citiesFragment"
-        android:name="br.com.renatoarg.weatherapp2021.cities.CitiesFragment"
-        android:label="fragment_cities"
-        tools:layout="@layout/fragment_cities" />
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="br.com.renatoarg.weatherapp2021.settings.SettingsFragment"
-        android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        android:id="@+id/mainFragment"
+        android:name="br.com.renatoarg.weatherapp2021.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_addPlaceFragment"
+            app:destination="@id/addPlaceFragment" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/addPlaceFragment"
+        android:name="br.com.renatoarg.weatherapp2021.addplace.AddPlaceFragment"
+        android:label="fragment_add_place"
+        tools:layout="@layout/fragment_add_place" />
 
 </navigation>
