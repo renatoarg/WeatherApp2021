@@ -33,8 +33,8 @@ class LocationsFragment : BottomSheetDialogFragment(), MavericksView {
 
     private val viewModel: LocationsViewModel by fragmentViewModel()
 
-    private val adapter = LocationsAdapter {
-        Toast.makeText(requireContext(), "add location: ${it.cityTitle}", Toast.LENGTH_SHORT).show()
+    private val adapter = LocationsAdapter { location ->
+        viewModel.saveLocation(location)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

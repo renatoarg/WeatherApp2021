@@ -4,10 +4,13 @@ import br.com.renatoarg.data.api.APIResponse
 import br.com.renatoarg.data.api.Constants.Companion.UNEXPECTED_ERROR
 import br.com.renatoarg.data.api.home.entity.Location
 import br.com.renatoarg.data.api.locations.entity.LocationsResponse
+import br.com.renatoarg.data.database.Item
+import br.com.renatoarg.data.database.ItemsRepository
 import retrofit2.HttpException
 
 class LocationsRepository(
-    private val client: LocationsClient
+    private val client: LocationsClient,
+    private val database: ItemsRepository
 ) {
     suspend fun queryLocations(
         query: String
@@ -35,4 +38,17 @@ class LocationsRepository(
             errorMessage = e.localizedMessage ?: UNEXPECTED_ERROR,
             errorCode = e.code()
         )
+
+    suspend fun saveLocation(location: Location) {
+        database.insert(
+            Item(
+                id = location.whereOnEarthId,
+                name = location.cityTitle
+            )
+        )
+    }
+
+    suspend fun fetchLocations() {
+
+    }
 }

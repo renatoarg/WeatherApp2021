@@ -1,12 +1,17 @@
 package br.com.renatoarg.data.api.home
 
+import androidx.lifecycle.asLiveData
 import br.com.renatoarg.data.api.APIResponse
 import br.com.renatoarg.data.api.Constants.Companion.UNEXPECTED_ERROR
 import br.com.renatoarg.data.api.home.entity.WeatherForLocation
+import br.com.renatoarg.data.database.Item
+import br.com.renatoarg.data.database.ItemsRepository
+import kotlinx.coroutines.flow.firstOrNull
 import retrofit2.HttpException
 
 class HomeRepository(
-    private val client: HomeClient
+    private val client: HomeClient,
+    private val database: ItemsRepository
 ) {
 
     private var responseCache: WeatherForLocation? = null
@@ -52,4 +57,9 @@ class HomeRepository(
             errorMessage = e.localizedMessage ?: UNEXPECTED_ERROR,
             errorCode = e.code()
         )
+
+    suspend fun fetchMainLocationId(): Item? {
+        val list = database.allItems.firstOrNull()
+        return list?.firstOrNull()
+    }
 }

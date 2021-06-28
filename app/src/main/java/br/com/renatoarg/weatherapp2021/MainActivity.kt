@@ -2,6 +2,7 @@ package br.com.renatoarg.weatherapp2021
 
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
+import br.com.renatoarg.data.api.cities.CitiesRepository
 import br.com.renatoarg.data.api.locations.LocationsRepository
 import br.com.renatoarg.data.api.home.HomeRepository
 import br.com.renatoarg.weatherapp2021.base.BaseActivity
@@ -16,6 +17,7 @@ class MainActivity : BaseActivity() {
 
     val homeRepository: HomeRepository by inject()
     val locationsRepository: LocationsRepository by inject()
+    val citiesRepository: CitiesRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

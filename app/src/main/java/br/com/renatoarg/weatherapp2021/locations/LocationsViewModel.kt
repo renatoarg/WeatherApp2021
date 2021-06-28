@@ -76,4 +76,10 @@ class LocationsViewModel(
         updateLocations(response.data)
     }
 
+    fun saveLocation(location: Location) {
+        viewModelScope.launch {
+            repository.saveLocation(location)
+        }
+    }
+
 }

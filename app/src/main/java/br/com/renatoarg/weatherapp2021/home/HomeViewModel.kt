@@ -52,14 +52,22 @@ class HomeViewModel(
         }
     }
 
-    fun fetchWeatherForLocation(locationId: Int, refresh: Boolean = false) {
+    fun fetchWeatherForLocation(locationId: Int? = null, refresh: Boolean = false) {
         viewModelScope.launch {
+            var desiredLocationId = locationId
             onLoading(true)
-            when (val response =
-                APIHelper.callApi { repository.fetchWeatherForLocation(locationId, refresh) }) {
-                is Response.Success -> onSuccess(response)
-                is Response.Error -> onError(response.errorMessage)
-                is Response.HttpError -> onHttpError(response.errorMessage)
+            if (desiredLocationId == null) {
+                desiredLocationId = repository.fetchMainLocationId()?.id
+            }
+            desiredLocationId?.let {
+                when (val response =
+                    APIHelper.callApi { repository.fetchWeatherForLocation(it, refresh) }) {
+                    is Response.Success -> onSuccess(response)
+                    is Response.Error -> onError(response.errorMessage)
+                    is Response.HttpError -> onHttpError(response.errorMessage)
+                }
+            } ?: run {
+                onEmptyLocation()
             }
             onLoading(false)
         }
@@ -68,6 +76,10 @@ class HomeViewModel(
     private suspend fun onSuccess(response: Response.Success<WeatherForLocation>) {
         onUpdateData(response.data)
         fireSideEffectEvent(HomeSideEffects.OnShowToast)
+    }
+
+    private fun onEmptyLocation() = setState {
+        copy(isLocationSet = false)
     }
 
     private suspend fun fireSideEffectEvent(event: HomeSideEffects) {

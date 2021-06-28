@@ -37,7 +37,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), MavericksView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.fetchWeatherForLocation(2487956)
+        viewModel.fetchWeatherForLocation()
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.homeSideEffects.collect { sideEffect ->
@@ -82,8 +82,16 @@ class HomeFragment : BaseFragment(R.layout.fragment_home), MavericksView {
     override fun invalidate() = withState(viewModel) { state ->
         onFetchWeatherForLocation(state.weatherForLocation)
         onUpdateLoading(state.isLoading)
+        onLocationNotSet(state.isLocationSet)
         onError(state.errorMessage)
         onHttpError(state.httpErrorMessage)
+    }
+
+    private fun onLocationNotSet(locationSet: Boolean) {
+        if (!locationSet) {
+            binding.homeViewsGroup.isVisible = false
+            showDialog("No location", "Location not set")
+        }
     }
 
     private fun onError(errorMessage: String?) {
